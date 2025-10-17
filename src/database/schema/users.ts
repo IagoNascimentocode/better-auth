@@ -7,6 +7,7 @@ export const users = pgTable("users", {
     .$defaultFn(() => randomUUIDv7()),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
+  phone: text("phone").unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
   createdAt: timestamp("created_at")

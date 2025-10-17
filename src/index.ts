@@ -1,9 +1,8 @@
-import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
-import { auth } from "@/auth";
-import { z } from "zod";
+import { openapi } from "@elysiajs/openapi";
 import { betterAuthPlugin, OpenAPI } from "./http/plugins/better-auth";
 import cors from "@elysiajs/cors";
+import routes from "./http/routes";
 
 const app = new Elysia()
   .use(
@@ -23,32 +22,7 @@ const app = new Elysia()
     }),
   )
   .use(betterAuthPlugin)
-  .get("/", () => "Hello Elysia")
-  .get(
-    "/users/:id",
-    ({ params, session, user }) => {
-
-
-      return { session };
-    },
-    {
-      auth: true,
-      detail: {
-        summary: "Get user by id",
-        description: "Get user by id",
-      },
-      tags: ["User"],
-      params: z.object({
-        id: z.string(),
-      }),
-      response: {
-        200: z.object({
-          id: z.string(),
-          name: z.string(),
-        }),
-      },
-    },
-  )
+  .use(routes)
   .listen(3333);
 
 console.log(
