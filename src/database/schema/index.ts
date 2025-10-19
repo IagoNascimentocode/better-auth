@@ -1,7 +1,8 @@
+import { users } from "./users";
+import { sessions } from "./sessions";
 import { accounts } from "./accounts";
 import { categories } from "./categories";
-import { sessions } from "./sessions";
-import { users } from "./users";
+import { transactions } from "./transactions";
 import { verifications } from "./verifications";
 
 export const schema = {
@@ -9,5 +10,6 @@ export const schema = {
   accounts,
   sessions,
   verifications,
-  categories
+  categories,
+  transactions
 };
