@@ -1,6 +1,7 @@
 import Elysia from "elysia";
 import { BaseError } from "@/errors/BaseError";
 import userRoutes from "@/modules/users/routes";
+import categoryRoutes from "@/modules/categories/routes.ts";
 
 export const routes = new Elysia()
   .onError(({ code, error, set }) => {
@@ -28,6 +29,7 @@ export const routes = new Elysia()
     };
   })
   .use(userRoutes)
+  .use(categoryRoutes)
 
 
 export default routes;

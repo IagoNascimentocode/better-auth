@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "../client";
 import { userSelectSchema } from "../interfaces/operarionSchemas";
 import { users } from "../schema/users";
