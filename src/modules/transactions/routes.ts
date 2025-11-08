@@ -2,7 +2,7 @@
 import Elysia, { t } from "elysia";
 import { ICreateTransactionPayload } from "./interface/ICreateTransactionPayload";
 import { createTransactionHandler } from "./handler/createTransaction";
-import { listAllTransactions } from "@/database/repositories/transactions.queries";
+import { getUserBalance, listAllTransactions } from "@/database/repositories/transactions.queries";
 import { updateTransactionHandler } from "./handler/updateTransaction";
 import { IUpdateTransactionPayload } from "./interface/IUpdateTransactionPayload";
 import { deleteCategoryHandler } from "./handler/deleteTransaction";
@@ -48,6 +48,23 @@ const transactionRoutes = new Elysia().group("/transactions", (app) =>
       "/list/:userId",
       async ({ params }) => {
         return await listAllTransactions(params.userId);
+      },
+      {
+        auth: true,
+        params: t.Object({
+          userId: t.String({ format: "uuid" }),
+        }),
+        detail: {
+          tags: ["Transactions"],
+          summary: "Listar transações do usuário",
+        },
+      }
+    )
+    .get(
+      "/balance/:userId",
+      async ({ params }) => {
+        const balance = await getUserBalance(params.userId);
+        return { balance };
       },
       {
         auth: true,
