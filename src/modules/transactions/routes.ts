@@ -1,11 +1,11 @@
-// modules/transactions/routes.ts
-import Elysia, { t } from "elysia";
-import { ICreateTransactionPayload } from "./interface/ICreateTransactionPayload";
-import { createTransactionHandler } from "./handler/createTransaction";
 import { getUserBalance, listAllTransactions } from "@/database/repositories/transactions.queries";
-import { updateTransactionHandler } from "./handler/updateTransaction";
+import { ICreateTransactionPayload } from "./interface/ICreateTransactionPayload";
 import { IUpdateTransactionPayload } from "./interface/IUpdateTransactionPayload";
+import { createTransactionHandler } from "./handler/createTransaction";
+import { updateTransactionHandler } from "./handler/updateTransaction";
 import { deleteCategoryHandler } from "./handler/deleteTransaction";
+import { getUserBalanceHandler } from "./handler/getUserBalance";
+import Elysia, { t } from "elysia";
 
 const transactionRoutes = new Elysia().group("/transactions", (app) =>
   app
@@ -63,7 +63,7 @@ const transactionRoutes = new Elysia().group("/transactions", (app) =>
     .get(
       "/balance/:userId",
       async ({ params }) => {
-        const balance = await getUserBalance(params.userId);
+        const balance = await getUserBalanceHandler(params.userId);
         return { balance };
       },
       {
