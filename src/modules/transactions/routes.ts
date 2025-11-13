@@ -1,4 +1,4 @@
-import { getUserBalance, listAllTransactions } from "@/database/repositories/transactions.queries";
+import { listAllTransactions } from "@/database/repositories/transactions.queries";
 import { ICreateTransactionPayload } from "./interface/ICreateTransactionPayload";
 import { IUpdateTransactionPayload } from "./interface/IUpdateTransactionPayload";
 import { createTransactionHandler } from "./handler/createTransaction";

@@ -3,6 +3,7 @@ import { BaseError } from "@/errors/BaseError";
 import userRoutes from "@/modules/users/routes";
 import categoryRoutes from "@/modules/categories/routes";
 import transactionRoutes from "@/modules/transactions/routes";
+import expenseRoutes from "@/modules/expenses/routes";
 
 export const routes = new Elysia()
   .onError(({ code, error, set }) => {
@@ -30,8 +31,10 @@ export const routes = new Elysia()
     };
   })
   .use(userRoutes)
+  .use(expenseRoutes)
   .use(categoryRoutes)
   .use(transactionRoutes)
+
 
 
 export default routes;
