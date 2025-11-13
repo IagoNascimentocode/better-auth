@@ -1,3 +1,4 @@
+// src/modules/expenses/interfaces/ICreateExpensesPayload.ts
 import { t } from "elysia";
 
 export const ICreateExpensesPayload = t.Object({
@@ -8,4 +9,8 @@ export const ICreateExpensesPayload = t.Object({
   notes: t.Optional(t.String()),
   categoryId: t.String(),
   userId: t.String(),
+  operationType: t.Union([
+    t.Literal("purchase"),
+    t.Literal("recurring_expense"),
+  ]),
 });

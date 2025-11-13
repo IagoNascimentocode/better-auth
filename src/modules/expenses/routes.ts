@@ -5,13 +5,14 @@ import { listAllExpensesHandler } from "./handler/listAllExpenses";
 import { deleteExpenseHandler } from "./handler/deleteExpense";
 import { ICreateExpensesPayload } from "./interfaces/ICreateExpensesPayload";
 import { IUpdateExpensesPayload } from "./interfaces/IUpdateExpensesPayload";
+import { createExpenseWithInstallmentsiHandler } from "./handler/createExpenseWithInstallments";
 
 const expenseRoutes = new Elysia().group("/expenses", (app) =>
   app
     .post(
       "/create",
       async ({ body }) => {
-        return await createExpenseHandler(body);
+        return await createExpenseWithInstallmentsiHandler(body);
       },
       {
         auth: true,
