@@ -5,6 +5,7 @@ import categoryRoutes from "@/modules/categories/routes";
 import transactionRoutes from "@/modules/transactions/routes";
 import expenseRoutes from "@/modules/expenses/routes";
 import installmentsRoutes from "@/modules/installments/routes";
+import dashboardRoutes from "@/modules/dashboard/routes";
 
 export const routes = new Elysia()
   .onError(({ code, error, set }) => {
@@ -36,6 +37,7 @@ export const routes = new Elysia()
   .use(categoryRoutes)
   .use(transactionRoutes)
   .use(installmentsRoutes)
+  .use(dashboardRoutes)
 
 
 

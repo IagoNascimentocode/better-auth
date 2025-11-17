@@ -1,8 +1,8 @@
 import { addMonths } from "date-fns";
 import { expensesQueries, installmentsQueries } from "@/database/repositories";
 import { ICreateExpensesPayload } from "../interfaces/ICreateExpensesPayload";
+import { OperationType, PaymentType } from "@/database/repositories/expenses.queries";
 
-type OperationType = "purchase" | "recurring_expense";
 
 type CreateExpenseInput = typeof ICreateExpensesPayload.static;
 function generateInstallments(data: {
@@ -11,6 +11,7 @@ function generateInstallments(data: {
   installments: number;
   startDate: Date;
   operationType: OperationType;
+  paymentType: PaymentType;
 }) {
   let amountPerInstallment: number;
 
@@ -28,7 +29,7 @@ function generateInstallments(data: {
     dueDate: addMonths(data.startDate, i).toISOString(),
     amount: amountPerInstallment,
     paid: false,
-    paymentType: data.operationType,
+    paymentType: data.paymentType,
     expenseId: data.expenseId,
   }));
 }
@@ -44,6 +45,7 @@ export async function createExpenseWithInstallmentsiHandler(
     installments: expense.installments,
     startDate: new Date(expense.date),
     operationType: payload.operationType,
+    paymentType: payload.paymentType,
   });
 
   await Promise.all(

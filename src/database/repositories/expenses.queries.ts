@@ -11,6 +11,63 @@ type ExpensesFilters = {
   categoryId?: string;
 };
 
+export type OperationType = "purchase" | "recurring";
+export type PaymentType =
+  | "credit_card"
+  | "pix"
+  | "boleto"
+  | "cash"
+  | "transfer";
+
+export type SummaryFilters = {
+  from?: Date;
+  to?: Date;
+  categoryId?: string;
+  operationType?: OperationType;
+  paymentType?: PaymentType;
+};
+
+export const getExpensesTotal = async (
+  userId: string,
+  filters: SummaryFilters,
+): Promise<{ total: number }> => {
+  const {
+    from,
+    to,
+    categoryId,
+    operationType,
+    paymentType,
+  } = filters;
+
+  const [row] = await db
+    .select({
+      totalAmount: sql<string>`COALESCE(SUM(
+        CASE
+          WHEN ${expenses.operationType} = 'recurring'
+           AND ${expenses.installments} > 1
+          THEN ${expenses.totalAmount}::numeric * ${expenses.installments}
+          ELSE ${expenses.totalAmount}::numeric
+        END
+      ), 0)::text`,
+    })
+    .from(expenses)
+    .where(
+      and(
+        eq(expenses.userId, userId),
+        from ? gte(expenses.date, from) : undefined,
+        to ? lte(expenses.date, to) : undefined,
+        categoryId ? eq(expenses.categoryId, categoryId) : undefined,
+        operationType ? eq(expenses.operationType, operationType) : undefined,
+        paymentType ? eq(expenses.paymentType, paymentType) : undefined,
+      )
+    );
+
+  const total = Number(row?.totalAmount ?? "0");
+
+  return { total };
+};
+
+
 export const getUserExpensesTotal = async (
   userId: string,
   filters: ExpensesFilters = {}

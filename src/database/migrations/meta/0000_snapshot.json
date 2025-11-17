@@ -1,5 +1,5 @@
 {
-  "id": "72a11a57-03b8-408e-8bc3-0c6fbd780962",
+  "id": "f5436187-f35c-4f22-a2b5-9d6d043a5e43",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -440,6 +440,22 @@
           "primaryKey": false,
           "notNull": false
         },
+        "operation_type": {
+          "name": "operation_type",
+          "type": "operation_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'purchase'"
+        },
+        "payment_type": {
+          "name": "payment_type",
+          "type": "payment_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'credit_card'"
+        },
         "category_id": {
           "name": "category_id",
           "type": "uuid",
@@ -540,9 +556,11 @@
         },
         "payment_type": {
           "name": "payment_type",
-          "type": "varchar(256)",
+          "type": "payment_type",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'credit_card'"
         },
         "expense_id": {
           "name": "expense_id",
@@ -678,6 +696,25 @@
       "values": [
         "income",
         "expense"
+      ]
+    },
+    "public.operation_type": {
+      "name": "operation_type",
+      "schema": "public",
+      "values": [
+        "purchase",
+        "recurring"
+      ]
+    },
+    "public.payment_type": {
+      "name": "payment_type",
+      "schema": "public",
+      "values": [
+        "credit_card",
+        "pix",
+        "boleto",
+        "cash",
+        "transfer"
       ]
     }
   },

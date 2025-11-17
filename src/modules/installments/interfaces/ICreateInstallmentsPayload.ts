@@ -5,6 +5,12 @@ export const ICreateInstallmentsPayload = t.Object({
   dueDate: t.String(),
   amount: t.Number(),
   paid: t.Boolean(),
-  paymentType: t.String(),
+  paymentType: t.Union([
+    t.Literal("credit_card"),
+    t.Literal("pix"),
+    t.Literal("boleto"),
+    t.Literal("cash"),
+    t.Literal("transfer"),
+  ]),
   expenseId: t.String(),
 });

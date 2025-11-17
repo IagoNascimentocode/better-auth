@@ -1,4 +1,6 @@
 CREATE TYPE "public"."transaction_type" AS ENUM('income', 'expense');--> statement-breakpoint
+CREATE TYPE "public"."operation_type" AS ENUM('purchase', 'recurring');--> statement-breakpoint
+CREATE TYPE "public"."payment_type" AS ENUM('credit_card', 'pix', 'boleto', 'cash', 'transfer');--> statement-breakpoint
 CREATE TABLE "categories" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(256) NOT NULL,
@@ -65,6 +67,8 @@ CREATE TABLE "expenses" (
 	"installments" integer NOT NULL,
 	"date" timestamp NOT NULL,
 	"notes" text,
+	"operation_type" "operation_type" DEFAULT 'purchase' NOT NULL,
+	"payment_type" "payment_type" DEFAULT 'credit_card' NOT NULL,
 	"category_id" uuid NOT NULL,
 	"user_id" uuid NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
@@ -77,7 +81,7 @@ CREATE TABLE "installments" (
 	"due_date" timestamp NOT NULL,
 	"amount" numeric(10, 2) NOT NULL,
 	"paid" boolean DEFAULT false NOT NULL,
-	"payment_type" varchar(256) NOT NULL,
+	"payment_type" "payment_type" DEFAULT 'credit_card' NOT NULL,
 	"expense_id" uuid NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
