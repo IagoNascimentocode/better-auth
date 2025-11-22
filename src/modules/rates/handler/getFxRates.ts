@@ -24,14 +24,16 @@ export async function getFxRatesHandler(): Promise<FxRates> {
 
   // 2) Coinbase + Exchangerate
   try {
-    const usdPerBtc = await getCoinbaseUsdPerBtc(); // USD/BTC
+    const usdPerBtc = await getCoinbaseUsdPerBtc();
+    console.log("usdPerBtc",usdPerBtc) // USD/BTC
     if (usdPerBtc) {
       const brl_usd = await getBrlUsd();
+      console.log("brl_usd",brl_usd)
       if (brl_usd) {
         const data: FxRates = {
           btc_usd: usdPerBtc,
           btc_brl: usdPerBtc / brl_usd,
-          brl_usd,
+          usd_brl: brl_usd,
           source: "coinbase(+fx)",
           fetchedAt: new Date().toISOString(),
         };

@@ -16,12 +16,12 @@ export async function getFromCoinGecko(): Promise<FxRates | null> {
   const j = await res.json() as { bitcoin?: { usd?: number; brl?: number } };
   const btc_usd = toNumber(j?.bitcoin?.usd);
   const btc_brl = toNumber(j?.bitcoin?.brl);
-  const brl_usd = btc_usd / btc_brl;
+  const usd_brl = btc_brl / btc_usd;
 
   return {
     btc_usd,
     btc_brl,
-    brl_usd,
+    usd_brl,
     source: "coingecko",
     fetchedAt: new Date().toISOString(),
   };

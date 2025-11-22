@@ -1,5 +1,4 @@
 import { getUserBalance } from "@/database/repositories/transactions.queries";
-import { BalanceFilters } from "@/modules/transactions/types";
 import { getFxRatesHandler } from "./getFxRates";
 
 export const getUserBalanceConverted = async (userId: string) => {
@@ -9,8 +8,8 @@ export const getUserBalanceConverted = async (userId: string) => {
   try {
     const rates = await getFxRatesHandler();
 
-    const usd = brl * rates.brl_usd;
-    const btc = brl / rates.btc_brl; // conversão direta BRL→BTC
+    const usd = brl / rates.usd_brl;
+    const btc = brl / rates.btc_brl; // coznversão direta BRL→BTC
 
     return {
       brl: brl.toFixed(2),
