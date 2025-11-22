@@ -1,11 +1,13 @@
 import Elysia from "elysia";
 import { BaseError } from "@/errors/BaseError";
 import userRoutes from "@/modules/users/routes";
+import assetRoutes from "@/modules/assets/routes";
+import expenseRoutes from "@/modules/expenses/routes";
+import dashboardRoutes from "@/modules/dashboard/routes";
 import categoryRoutes from "@/modules/categories/routes";
 import transactionRoutes from "@/modules/transactions/routes";
-import expenseRoutes from "@/modules/expenses/routes";
 import installmentsRoutes from "@/modules/installments/routes";
-import dashboardRoutes from "@/modules/dashboard/routes";
+import investmentTransactionsRoutes from "@/modules/investmentTransactions/routes";
 
 export const routes = new Elysia()
   .onError(({ code, error, set }) => {
@@ -38,7 +40,7 @@ export const routes = new Elysia()
   .use(transactionRoutes)
   .use(installmentsRoutes)
   .use(dashboardRoutes)
-
-
+  .use(assetRoutes)
+  .use(investmentTransactionsRoutes)
 
 export default routes;

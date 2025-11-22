@@ -5,10 +5,13 @@ import { expenses } from "./expenses";
 import { categories } from "./categories";
 import { installments } from "./installments";
 import { transactions } from "./transactions";
-import { verifications } from "./verifications";
+import { verifications } from "./verifications"
+import { assets } from "./assets";
+import { investmentTransactions } from "./investmentTransactions";
 
 export const schema = {
   users,
+  assets,
   expenses,
   accounts,
   sessions,
@@ -16,4 +19,5 @@ export const schema = {
   transactions,
   installments,
   verifications,
+  investmentTransactions
 };
